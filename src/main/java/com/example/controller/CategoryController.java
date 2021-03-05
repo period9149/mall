@@ -27,6 +27,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+
 //    @GetMapping("/index")
 //    public Result index() {
 //        Category category = categoryService.getById(1L);
@@ -65,4 +66,9 @@ public class CategoryController {
         return Result.succ(null);
     }
 
+    @PostMapping("/categories/delete")
+    public Result delete(@RequestBody Category category){
+        categoryService.removeById(category.getCategoryId());
+        return Result.succ(null);
+    }
 }

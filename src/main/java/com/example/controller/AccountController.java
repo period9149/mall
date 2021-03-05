@@ -48,6 +48,7 @@ public class AccountController {
                 .put("userPhone", user.getUserPhone())
                 .put("userSex", user.getUserSex())
                 .put("userAvatar", user.getUserAvatar())
+                .put("userAdmin", user.getUserAdmin())
                 .map()
                 );
     }

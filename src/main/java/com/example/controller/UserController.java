@@ -1,6 +1,9 @@
 package com.example.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.lang.Result;
 import com.example.entity.User;
 import com.example.service.UserService;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-02-21
  */
 @RestController
-@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
@@ -31,8 +33,21 @@ public class UserController {
         return Result.succ(user);
     }
 
+    @GetMapping("/users")
+    public Result list(@RequestParam(defaultValue = "1") Integer currentPage){
+        Page page = new Page(currentPage, 6);
+        IPage pageData = userService.page(page, new QueryWrapper<User>());
+        return Result.succ(pageData);
+    }
+
     @PostMapping("/save")
     public Result save(@Validated @RequestBody User user){
         return Result.succ(user);
+    }
+
+    @PostMapping("/users/delete")
+    public Result delete(@RequestBody User user){
+        userService.removeById(user.getUserId());
+        return Result.succ(null);
     }
 }

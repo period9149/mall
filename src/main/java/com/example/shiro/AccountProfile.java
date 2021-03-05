@@ -19,4 +19,6 @@ public class AccountProfile implements Serializable {
 
     private String userAvatar;
 
+    private Integer userAdmin;
+
 }
