@@ -11,6 +11,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * <p>
@@ -58,6 +64,36 @@ public class ProductController {
         productService.saveOrUpdate(temp);
 
         return Result.succ(null);
+    }
+
+    @PostMapping("/products/delete")
+    public Result delete(@RequestBody Product product){
+        productService.removeById(product.getProductId());
+        return Result.succ(null);
+    }
+
+    @RequestMapping("/upload")
+    public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest req)
+            throws IllegalStateException, IOException {
+
+        // 判断文件是否为空，空则返回失败页面
+        if (file.isEmpty()) {
+            return "failed";
+        }
+
+        // 获取文件存储路径（绝对路径）
+        String path = "/Users/period9149/Desktop/Projects/mall/uploads";
+
+        // 获取原文件名
+        Date date = new Date();
+        String fileName = date.getTime() + file.getOriginalFilename();
+
+        // 创建文件实例
+        File filePath = new File(path, fileName);
+
+        // 写入文件
+        file.transferTo(filePath);
+        return "http://localhost:8081/" + fileName;
     }
 
 }
