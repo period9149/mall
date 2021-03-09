@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -84,16 +85,17 @@ public class ProductController {
         // 获取文件存储路径（绝对路径）
         String path = "/Users/period9149/Desktop/Projects/mall/uploads";
 
-        // 获取原文件名
-        Date date = new Date();
-        String fileName = date.getTime() + file.getOriginalFilename();
+        // 设置文件名
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date(System.currentTimeMillis());
+        String fileName = formatter.format(date) + "_"+ file.getOriginalFilename();
 
         // 创建文件实例
         File filePath = new File(path, fileName);
 
         // 写入文件
         file.transferTo(filePath);
-        return "http://localhost:8081/" + fileName;
+        return fileName;
     }
 
 }

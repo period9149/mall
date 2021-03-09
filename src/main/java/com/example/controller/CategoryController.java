@@ -41,6 +41,12 @@ public class CategoryController {
         return Result.succ(pageData);
     }
 
+    @GetMapping("/categories/all")
+    public Result listAll(){
+        // categoryService.getMap(new QueryWrapper<Category>());
+        return Result.succ(categoryService.list());
+    }
+
     @GetMapping("/categories/{categoryId}")
     public Result detail(@PathVariable(name = "categoryId") Long categoryId){
         Category category = categoryService.getById(categoryId);
