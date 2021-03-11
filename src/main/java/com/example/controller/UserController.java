@@ -1,6 +1,7 @@
 package com.example.controller;
 
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,6 +31,13 @@ public class UserController {
     @GetMapping("/index")
     public Result index(){
         User user = userService.getById("1");
+        return Result.succ(user);
+    }
+
+    @GetMapping("/users/{userId}")
+    public Result detail(@PathVariable(name = "userId") Long userId){
+        User user = userService.getById(userId);
+        Assert.notNull(user, "该用户被删除了");
         return Result.succ(user);
     }
 

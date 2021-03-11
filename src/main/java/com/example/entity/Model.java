@@ -42,5 +42,9 @@ public class Model implements Serializable {
     @NotBlank(message = "型号内容不能为空")
     private String modelContent;
 
+    /**
+     * 商品价格
+     */
+    private String modelPrice;
 
 }

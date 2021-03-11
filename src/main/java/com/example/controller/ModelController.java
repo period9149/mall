@@ -36,9 +36,14 @@ public class ModelController {
         return Result.succ(pageData);
     }
 
+    @GetMapping("/models/all")
+    public Result listAll(){
+        return Result.succ(modelService.list());
+    }
+
     @GetMapping("/models/{modelId}")
-    public Result detail(@PathVariable(name = "modelId") Long productId){
-        Model model = modelService.getById(productId);
+    public Result detail(@PathVariable(name = "modelId") Long modelId){
+        Model model = modelService.getById(modelId);
         Assert.notNull(model, "该商品被删除了");
         return Result.succ(model);
     }

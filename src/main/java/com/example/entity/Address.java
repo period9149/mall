@@ -1,13 +1,14 @@
 package com.example.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -38,25 +39,11 @@ public class Address implements Serializable {
      */
     private String addressReceiver;
 
-    /**
-     * 收货地区（省）
-     */
-    private String addressProvince;
-
-    /**
-     * 收货地区（市）
-     */
-    private String addressCity;
-
-    /**
-     * 收货地区（区，县）
-     */
-    private String addressCountry;
 
     /**
      * 具体地址
      */
-    private String addressAddress;
+    private String addressDetail;
 
     /**
      * 收货电话
