@@ -77,4 +77,13 @@ public class CategoryController {
         categoryService.removeById(category.getCategoryId());
         return Result.succ(null);
     }
+
+    @GetMapping("/searchCategory")
+    public Result search(@RequestParam(defaultValue = "1") Integer currentPage, String info){
+        Page page = new Page(currentPage, 100);
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<Category>();
+        queryWrapper.like("category_name", info);
+        IPage pageData = categoryService.page(page, queryWrapper);
+        return Result.succ(pageData);
+    }
 }

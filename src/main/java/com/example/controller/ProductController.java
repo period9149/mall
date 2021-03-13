@@ -98,4 +98,16 @@ public class ProductController {
         return fileName;
     }
 
+    @GetMapping("/searchProduct")
+    public Result search(@RequestParam(defaultValue = "1") Integer currentPage, String info){
+        Page page = new Page(currentPage, 100);
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<Product>();
+        queryWrapper.like("product_title", info)
+                .or().
+                like("product_id", info)
+                .or()
+                .like("product_details", info);
+        IPage pageData = productService.page(page, queryWrapper);
+        return Result.succ(pageData);
+    }
 }

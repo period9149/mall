@@ -58,4 +58,15 @@ public class UserController {
         userService.removeById(user.getUserId());
         return Result.succ(null);
     }
+
+    @GetMapping("/searchUser")
+    public Result search(@RequestParam(defaultValue = "1") Integer currentPage, String info){
+        Page page = new Page(currentPage, 100);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("user_name", info)
+                .or()
+                .like("user_phone", info);
+        IPage pageData = userService.page(page, queryWrapper);
+        return Result.succ(pageData);
+    }
 }
