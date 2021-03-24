@@ -39,11 +39,30 @@ public class Address implements Serializable {
      */
     private String addressReceiver;
 
+    /**
+     * 收货省
+     */
+    private String addressProvince;
+
+    /**
+     * 收货市
+     */
+    private String addressCity;
+
+    /**
+     * 收货区
+     */
+    private String addressCounty;
 
     /**
      * 具体地址
      */
     private String addressDetail;
+
+    /**
+     * 邮政编码
+     */
+    private String addressCode;
 
     /**
      * 收货电话
@@ -55,6 +74,5 @@ public class Address implements Serializable {
      */
     @TableField("address_isDefault")
     private Integer addressIsdefault;
-
-
+    
 }

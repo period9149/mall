@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -35,6 +36,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    /* 获取所有商品 */
     @GetMapping("/products")
     public Result list(@RequestParam(defaultValue = "1") Integer currentPage){
         Page page = new Page(currentPage, 10);
@@ -42,6 +44,7 @@ public class ProductController {
         return Result.succ(pageData);
     }
 
+    /* 根据id找商品 */
     @GetMapping("/products/{productId}")
     public Result detail(@PathVariable(name = "productId") Long productId){
         Product product = productService.getById(productId);
@@ -49,6 +52,7 @@ public class ProductController {
         return Result.succ(product);
     }
 
+    /* 商品添加、修改 */
     @PostMapping("/products/edit")
     public Result edit(@Validated @RequestBody Product product) {
 
@@ -67,12 +71,14 @@ public class ProductController {
         return Result.succ(null);
     }
 
+    /* 商品删除 */
     @PostMapping("/products/delete")
     public Result delete(@RequestBody Product product){
         productService.removeById(product.getProductId());
         return Result.succ(null);
     }
 
+    /* 上传接口 */
     @RequestMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest req)
             throws IllegalStateException, IOException {
@@ -98,6 +104,7 @@ public class ProductController {
         return fileName;
     }
 
+    /* 商品搜索 */
     @GetMapping("/searchProduct")
     public Result search(@RequestParam(defaultValue = "1") Integer currentPage, String info){
         Page page = new Page(currentPage, 100);
@@ -109,5 +116,14 @@ public class ProductController {
                 .like("product_details", info);
         IPage pageData = productService.page(page, queryWrapper);
         return Result.succ(pageData);
+    }
+
+    /* 根据分类找商品 */
+    @GetMapping("/searchProductInCategory")
+    public Result searchInCategory(String id){
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<Product>();
+        queryWrapper.like("product_category", id);
+        List list = productService.listMaps(queryWrapper);
+        return Result.succ(list);
     }
 }
