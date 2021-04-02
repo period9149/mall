@@ -52,6 +52,11 @@ public class Product implements Serializable {
     private String productPrice;
 
     /**
+     * 商品折扣
+     */
+    private String productSale;
+
+    /**
      * 商品成本
      */
     private String productCost;
@@ -60,6 +65,16 @@ public class Product implements Serializable {
      * 商品详情
      */
     private String productDetails;
+
+    /**
+     * 商品注意事项
+     */
+    private String productAttention;
+
+    /**
+     * 商品使用说明
+     */
+    private String productInstructions;
 
     /**
      * 商品已售

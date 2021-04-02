@@ -68,4 +68,11 @@ public class AddressController {
         List list = addressService.listMaps(queryWrapper);
         return Result.succ(list);
     }
+
+    /* 删除收货地址 */
+    @PostMapping("/addresses/delete")
+    public Result delete(@RequestBody Address address){
+        addressService.removeById(address.getAddressId());
+        return Result.succ(null);
+    }
 }
