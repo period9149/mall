@@ -3,8 +3,6 @@ package com.example.controller;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.lang.Result;
 import com.example.entity.Model;
 import com.example.service.ModelService;
@@ -12,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,17 +29,6 @@ public class ModelController {
     @Autowired
     ModelService modelService;
 
-    @GetMapping("/models")
-    public Result list(@RequestParam(defaultValue = "1") Integer currentPage){
-        Page page = new Page(currentPage, 10);
-        IPage pageData = modelService.page(page, new QueryWrapper<Model>());
-        return Result.succ(pageData);
-    }
-
-    @GetMapping("/models/all")
-    public Result listAll(){
-        return Result.succ(modelService.list());
-    }
 
     @GetMapping("/models/{modelId}")
     public Result detail(@PathVariable(name = "modelId") Long modelId){
@@ -63,6 +52,21 @@ public class ModelController {
         BeanUtils.copyProperties(model, temp);
         modelService.saveOrUpdate(temp);
 
+        return Result.succ(null);
+    }
+
+    /* 根据商品找型号 */
+    @GetMapping("/searchModelsByProductId")
+    public Result searchModelsByProductId(String productId){
+        QueryWrapper<Model> queryWrapper = new QueryWrapper<Model>();
+        queryWrapper.like("model_product", productId);
+        List list = modelService.listMaps(queryWrapper);
+        return Result.succ(list);
+    }
+
+    @PostMapping("/models/delete")
+    public Result delete(@RequestBody Model model){
+        modelService.removeById(model.getModelId());
         return Result.succ(null);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.mapper;
 
-import com.example.entity.Model;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.Model;
 
 /**
  * <p>
@@ -13,5 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-02-21
  */
 public interface ModelMapper extends BaseMapper<Model> {
+
 
 }

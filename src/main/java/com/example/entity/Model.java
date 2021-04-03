@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -39,7 +38,7 @@ public class Model implements Serializable {
     /**
      * 具体型号内容
      */
-    @NotBlank(message = "型号内容不能为空")
+
     private String modelContent;
 
     /**
