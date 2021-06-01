@@ -60,6 +60,11 @@ public class Order implements Serializable {
     private Integer orderCount;
 
     /**
+     * 实际付款
+     */
+    private String orderPay;
+
+    /**
      * 快递单号
      */
     private String orderExpress;

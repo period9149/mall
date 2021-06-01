@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 订单表
@@ -68,5 +70,14 @@ public class OrderController {
         queryWrapper.like("order_id", info);
         IPage pageData = orderService.page(page, queryWrapper);
         return Result.succ(pageData);
+    }
+
+
+    @GetMapping("/searchOrderByStatus")
+    public Result searchOrderByStatus(@RequestParam(defaultValue = "1") Integer currentPage, String status){
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<Order>();
+        queryWrapper.like("order_status", status);
+        List list = orderService.listMaps(queryWrapper);
+        return Result.succ(list);
     }
 }

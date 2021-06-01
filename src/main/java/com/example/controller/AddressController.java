@@ -37,8 +37,17 @@ public class AddressController {
     @GetMapping("/addresses/{addressId}")
     public Result detail(@PathVariable(name = "addressId") Long addressId){
         Address address = addressService.getById(addressId);
-        Assert.notNull(address, "该商品被删除了");
+        Assert.notNull(address, "该地址被删除了");
         return Result.succ(address);
+    }
+
+    /* 根据用户id找默认收货地址 */
+    @GetMapping("/getDefaultAddress/{userId}")
+    public Result getDefaultAddress(@PathVariable(name = "userId") Long userId){
+        QueryWrapper<Address> queryWrapper = new QueryWrapper<Address>();
+        queryWrapper.eq("address_user", userId).eq("address_isDefault", 1);
+        List list = addressService.listMaps(queryWrapper);
+        return Result.succ(list);
     }
 
     /* 地址添加、修改 */
